@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/eason/Dropbox/CS/C++/hash_bable1/hash.cpp
+hash.h
+C:/Users/eason/Dropbox/CS/C++/hash_bable1/hash.h
+iostream
+-
+string
+-
+cstdlib
+-
+
+C:/Users/eason/Dropbox/CS/C++/hash_bable1/hash.h
+iostream
+-
+string
+-
+cstdlib
+-
+
+C:/Users/eason/Dropbox/CS/C++/hash_bable1/main.cpp
+iostream
+-
+string
+-
+cstdlib
+-
+hash.h
+C:/Users/eason/Dropbox/CS/C++/hash_bable1/hash.h
+

@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/eason/Dropbox/CS/C++/SingleLinkedList/List.cpp
+List.h
+C:/Users/eason/Dropbox/CS/C++/SingleLinkedList/List.h
+iostream
+-
+cstdlib
+-
+
+C:/Users/eason/Dropbox/CS/C++/SingleLinkedList/List.h
+
+C:/Users/eason/Dropbox/CS/C++/SingleLinkedList/main.cpp
+iostream
+-
+cstdlib
+-
+List.h
+C:/Users/eason/Dropbox/CS/C++/SingleLinkedList/List.h
+
