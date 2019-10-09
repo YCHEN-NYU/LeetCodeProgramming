@@ -35,39 +35,71 @@
 #include <vector>
 using namespace std;
 
-bool isValid(string s){
-    if(s.size() == 0)   return true;
-    
+bool isValid(string s) {
+    if(s.size() == 0) return true;
     stack<char> stk;
-    
-    for (int i = 0; i < s.size(); i++) {
-        switch (s[i]) {
-            case '(':
-                stk.push(s[i]);
-                break;
-            case '[':
-                stk.push(s[i]);
-                break;
-            case '{':
-                stk.push(s[i]);
-                break;
-            
-            case ')':
+    for(char c : s){
+        switch(c){
+            case '(': stk.push(c); break;
+            case '[': stk.push(c); break;
+            case '{': stk.push(c); break;
+            case ')': {
                 if(!stk.empty() && stk.top() == '(') stk.pop();
                 else return false;
                 break;
-            case ']':
+            }
+            case ']': {
                 if(!stk.empty() && stk.top() == '[') stk.pop();
                 else return false;
                 break;
-            case '}':
+            }
+            case '}': {
                 if(!stk.empty() && stk.top() == '{') stk.pop();
                 else return false;
                 break;
+            }
             default:
+                return false;
                 break;
     }
 }
+return stk.empty();
+}
+
+
+// bool isValid(string s){
+//     if(s.size() == 0)   return true;
+    
+//     stack<char> stk;
+    
+//     for (int i = 0; i < s.size(); i++) {
+//         switch (s[i]) {
+//             case '(':
+//                 stk.push(s[i]);
+//                 break;
+//             case '[':
+//                 stk.push(s[i]);
+//                 break;
+//             case '{':
+//                 stk.push(s[i]);
+//                 break;
+            
+//             case ')':
+//                 if(!stk.empty() && stk.top() == '(') stk.pop();
+//                 else return false;
+//                 break;
+//             case ']':
+//                 if(!stk.empty() && stk.top() == '[') stk.pop();
+//                 else return false;
+//                 break;
+//             case '}':
+//                 if(!stk.empty() && stk.top() == '{') stk.pop();
+//                 else return false;
+//                 break;
+//             default:
+//                 break;
+//     }
+// }
 
     return stk.empty();
 }

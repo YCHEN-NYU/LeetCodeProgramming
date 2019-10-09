@@ -36,27 +36,39 @@ int search(vector<int>& nums, int target) {
     }
 }
 
-int find_min_index(vector<int> &nums){
+int search(vector<int>& nums, int target) {
+    if(nums.size() == 0) return -1;
     
     int low = 0, high = nums.size() - 1;
-    int mid;
-    while(low < high){
-        mid = (low + high)/2;
-        if(nums[mid] > nums[high]){
-            low = mid + 1;
-        }
+    while(low <= high){
+        int mid = (low + high)/2;
+        if(target == nums[mid]) return mid;// found nums[mid] == target
         else{
-            high = mid;
+            // left part is sorted
+            if(nums[low] <= nums[mid]){
+                // if target falls in the left part
+                if(target >= nums[low] && target < nums[mid])
+                    high = mid - 1;
+                else
+                    low = mid + 1; // target falls in the right part
+            }
+            else{ // right part is sorted
+                // if target is in the right part
+                if(target > nums[mid] && target <= nums[high])
+                    low = mid + 1;
+                else
+                    high = mid - 1; // target is in the left part
+            }
         }
     }
-    return low;
+    return -1;
 }
 
 int binary_search(vector<int> &nums, int target, int low, int high){
-    int mid;
-    while(low < high){
-        mid = (low + high)/2;
-        if(nums[mid] == target) return mid;
+    while(low <= high){
+        int mid = (low + high)/2;
+        if(nums[mid] == target)
+            return mid;
         else{
             if(target < nums[mid])
                 high = mid - 1;
@@ -65,10 +77,7 @@ int binary_search(vector<int> &nums, int target, int low, int high){
         }
     }
     
-    if(nums[low] == target)
-        return low;
-    else
-        return -1;
+    return -1;
 }
 
 int main(){

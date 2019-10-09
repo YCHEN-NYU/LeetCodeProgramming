@@ -39,6 +39,7 @@ ListNode * buildLinkedList(vector<int> & nums){
     }
 }
 
+// recursive method
 ListNode * swapPairs(ListNode * head){
     if(!head || !head->next)    return head;
     else{

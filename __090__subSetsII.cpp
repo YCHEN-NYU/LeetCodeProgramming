@@ -1,33 +1,46 @@
 /*
+ 90. Subsets II
  Given a collection of integers that might contain duplicates, nums, return all possible subsets (the power set).
  Note: The solution set must not contain duplicate subsets.
+ 
+ Example:
+ Input: [1,2,2]
+ Output:
+ [
+ [2],
+ [1],
+ [1,2,2],
+ [2,2],
+ [1,2],
+ []
+ ]
  */
-
 #include <iostream>
 #include <vector>
 using namespace std;
 
-void helper(vector<int> &nums, vector<int> &temp, int begin, vector<vector<int>> &res){
+void helper(vector<int> &nums, vector<int> &temp, int start, vector<vector<int>> &res){
     res.push_back(temp);
     
-    for(int i = begin; i < nums.size(); i++){
-        if(i > begin && nums[i] == nums[i-1]) continue;
+    for(int i = start; i < nums.size(); i++){
+        if(i > start && nums[i] == nums[i-1]) continue; // handle duplicates
         temp.push_back(nums[i]);
         helper(nums, temp, i+1, res);
         temp.erase(temp.end() - 1);
     }
 }
-
-vector<vector<int>> subsetsII(vector<int> &nums){
-    sort(nums.begin(), nums.end());
+// RECURSIVE
+vector<vector<int>> subsetsII_Recursive(vector<int> &nums){
+    sort(nums.begin(), nums.end()); // sort nums before moving forward
     vector<vector<int>> res;
     vector<int> temp;
     helper(nums, temp, 0, res);
     return res;
 }
 
+// ITERATIVE
 vector<vector<int>> subsetsII_Iterative(vector<int> &nums){
-    sort(nums.begin(), nums.end());
+    sort(nums.begin(), nums.end()); // sort nums before moving forward
     vector<vector<int>> res = {{}};
     int begin = 0, len = 0;
     for (int i = 0; i < nums.size(); i++) {
@@ -68,14 +81,3 @@ int main(){
     printVector2D(res);
     return 0;
 }
-
-
-/*
- nums = [1, 2, 2]
- 
- res = [[]]
- [[]]
- [[], [1]]
- 
- 
- */

@@ -32,19 +32,21 @@
 using namespace std;
 
 string zigzagCovert(string s, int n){
-    if(n <= 1) return s;
-    string row[n]; // string array
+    if(n <= 1) return s; // corner case
     
+    string row[n];
+    int period = 2*n - 2;
     for(int i = 0; i < s.size(); i++){
-        int index = i%(2*n - 2);
-        if(index < n)   row[index] += s[i];
-        else    row[n - 1 - (index - (n - 1))] += s[i];
+        if(i%period < n)
+            row[i%period] += s[i];
+        else
+            row[period - i%period] +=s[i];
     }
     
-    string res = "";
-    for(int i = 0; i < n; i++)
-        res += row[i];
-    return res;
+    string result = "";
+    for(int i = 0; i < n; i++)  result += row[i];
+    
+    return result;
 }
 
 int main(){

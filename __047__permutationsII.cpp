@@ -14,23 +14,52 @@
 #include <vector>
 using namespace std;
 
-void helper(vector<int> nums, int begin, vector<vector<int>> &res) {
-    if (begin == nums.size()) {
-        res.push_back(nums);
-        return;
-    }
-    for (int i = begin; i < nums.size(); ++i) {
-        if (i != begin && nums[i] == nums[begin]) continue;
-        swap(nums[begin], nums[i]);
-        helper(nums, begin + 1, res);
-    }
+// void helper(vector<int> nums, int begin, vector<vector<int>> &res) {
+//     if (begin == nums.size()) {
+//         res.push_back(nums);
+//         return;
+//     }
+//     for (int i = begin; i < nums.size(); ++i) {
+//         if (i != begin && nums[i] == nums[begin]) continue;
+//         swap(nums[begin], nums[i]);
+//         helper(nums, begin + 1, res);
+//     }
     
-}
-vector<vector<int>> permuteUnique(vector<int>& nums) {
+// }
+// vector<vector<int>> permuteUnique(vector<int>& nums) {
+//     sort(nums.begin(), nums.end());
+//     vector<vector<int>> res;
+//     helper(nums, 0, res);
+//     return res;
+// }
+
+
+vector<vector<int>> permuteUnique(vector<int> &nums){
+    int n = nums.size();
     sort(nums.begin(), nums.end());
+    
     vector<vector<int>> res;
-    helper(nums, 0, res);
-    return res;
+    vector<bool> used[n];
+    vector<int> tempList;
+    
+    dfs(nums, tempList, used, res);
+}
+
+void dfs(vector<int> &nums, vector<int> tempList, vector<bool> &used, vector<vector<int>> &res){
+    if(tempList.size() == nums.size()){
+        res.push_back(tempList);
+    }
+    else{
+        for(int i = 0; i < nums.size(); i++){
+            if(used[i] || i > 0 && nums[i] == nums[i - 1] && !used[i - 1]) continue;
+            used[i] = true;
+            tempList.push_back(nums[i]);
+            dfs(nums, tempList, used, res);
+            used[i] = false;
+            tempList.pop_back();
+        }
+    }
+
 }
 
 

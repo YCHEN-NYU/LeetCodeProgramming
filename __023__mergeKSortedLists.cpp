@@ -1,18 +1,8 @@
 /*
  23. Merge k Sorted Lists
- Hard
- 
- 2016
- 
- 127
- 
- Favorite
- 
- Share
  Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
  
  Example:
- 
  Input:
  [
  1->4->5,
@@ -21,7 +11,6 @@
  ]
  Output: 1->1->2->3->4->4->5->6
  */
-
 
 #include <iostream>
 #include <vector>
@@ -56,6 +45,57 @@ ListNode * buildLinkedList(vector<int> & nums){
     }
 }
 
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+template <class T> struct greater{
+    /* overload the oeprator() */
+    bool operator()(const ListNode *a, const ListNode *b){
+        return a->val > b->val;
+    }
+};
+
+template <class T> struct less{
+    bool operator() (const ListNode *a, const ListNode *b){
+        return a->val < b->val;
+    }
+};
+
+
+ListNode* mergeKLists(vector<ListNode*>& lists) {
+    /* put the first element of each list into a priority queue */
+    priority_queue<ListNode *, vector<ListNode *>, greater> q;
+    
+    for(auto list : lists){
+        if(list) q.push(list);
+    }
+    
+    ListNode * preHead = new ListNode(0);
+    ListNode * curr = preHead;
+    while(!q.empty()){
+        ListNode * tmp = q.top();
+        q.pop();
+        
+        curr->next = tmp;
+        curr = curr->next;
+        
+        if(tmp->next) q.push(tmp->next);
+    }
+    
+    return preHead->next;
+}
+
+
+
+
+/*
 bool hasNonEmptyList(vector<ListNode*>& lists){
     for(int i = 0; i < lists.size(); i++)  if(lists[i] != NULL) return true;
     return false;
@@ -89,7 +129,7 @@ ListNode* mergeKLists(vector<ListNode*>& lists) {
 }
 
 
-/*
+
 ListNode * mergeTwoLists(ListNode * l1, ListNode * l2){
     if(!l1 && !l2)  return NULL;
     if(l1 && !l2)   return l1;
@@ -126,7 +166,6 @@ ListNode * mergeKLists(vector<ListNode *> &lists){
     }
     return l;
 }
-
 
 */
 

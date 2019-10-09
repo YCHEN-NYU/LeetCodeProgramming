@@ -41,23 +41,37 @@ ListNode * reverseKGroup(ListNode *head, int k){
     ListNode *preHead = new ListNode(0);
     preHead->next = head;
     ListNode *cur = preHead, *nex, *pre = preHead;
-    while(cur = cur->next){
-        num++;
-        while(num >= k){
-            cur = pre->next;
+    while(cur = cur->next) num++;
+    
+    while(num >= k){
+        cur = pre->next;
+        nex = cur->next;
+        for(int i = 1; i < k; i++){
+            cur->next = nex->next;
+            nex->next = pre->next;
+            pre->next = nex;
             nex = cur->next;
-            for(int i = 1; i < k; i++){
-                cur->next = nex->next;
-                nex->next = pre->next;
-                pre->next = nex;
-                nex = cur->next;
-            }
-            pre = cur;
-            num -= k;
         }
+        pre = cur;
+        num -= k;
     }
+
     return preHead->next;
 }
+
+//ListNode * reverseKGroup(ListNode *head, int k){
+//    if(!head || !head->next || k == 1) return head;
+//    
+//    ListNode *dummy = new ListNode(0);
+//    dummy->next = head;
+//    ListNode *prev = dummy, *cur = dummy, *nxt;
+//
+//    int len = 0; // get the number of nodes in the list
+//    while(cur->next){
+//        cur = cur->next;
+//        len++;
+//    }
+//}
 
 int main(){
     

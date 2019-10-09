@@ -12,19 +12,18 @@
  21 is read off as "one 2, then one 1" or 1211.
  
  Given an integer n where 1 ≤ n ≤ 30, generate the nth term of the count-and-say sequence.
- 
  Note: Each term of the sequence of integers will be represented as a string.
  
- 
- 
  Example 1:
- 
  Input: 1
  Output: "1"
+
  Example 2:
- 
  Input: 4
  Output: "1211"
+
+ Find the n’th term in Look-and-say (Or Count and Say) Sequence. The look-and-say sequence is the sequence of below integers:
+ 1, 11, 21, 1211, 111221, 312211, 13112221, 1113213211, …
  */
 
 

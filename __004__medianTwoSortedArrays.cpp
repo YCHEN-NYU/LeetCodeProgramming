@@ -19,46 +19,86 @@
 #include <vector>
 using namespace std;
 
-double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
-    int N1 = nums1.size(), N2 = nums2.size(), N = N1 + N2;
-    if(N1 > N2) return findMedianSortedArrays(nums2, nums1);
-    
-    if(N1 == 0){
-        if(N2 % 2 == 0)
-            return (nums2[N2/2 - 1] + nums2[N2/2])/2.0;
-        else
-            return nums2[N2/2];
-    }
-    
-    int cutL = 0, cutR = N1;
-    int cut1 = cutL + (cutR - cutL)/2, cut2 = N/2 - cut1;
-    
-    while(cut1 <= N1){
-        cut1 = cutL + (cutR - cutL)/2;
-        cut2 = N/2 - cut1;
-        
-        double L1 = (cut1 == 0? INT_MIN : nums1[cut1 - 1]);
-        double L2 = (cut2 == 0? INT_MIN : nums2[cut2 - 1]);
-        double R1 = (cut1 == N1? INT_MAX : nums1[cut1]);
-        double R2 = (cut2 == N2? INT_MAX : nums2[cut2]);
-        
-        if(L1 > R2)
-            // move to the left
-            cutR = cut1 - 1;
-        else if(L2 > R1)
-            // move to the right
-            cutL = cut1 + 1;
-        else {
-            // case with target found
-            if(N % 2 == 0)
-                // N is even
-                return (max(L1, L2) + min(R1, R2))/2.0;
-            else
-                return min(R1, R2);
+
+// Brute Force: merge two sorted arrays, O(m + n) space, O(m + n) time
+void merge(vector<int> &nums1, vector<int> &nums2){
+    vector<int> res;
+    int n1 = nums1.size(), n2 = nums2.size();
+    int i = 0, j = 0;
+    while(i < n1 && j < n2){
+        if(nums1[i] < nums2[j]){
+            res.push_back(nums1[i]);
+            i++;
+        }
+        else{
+            res.push_back(nums2[j]);
+            j++;
         }
     }
-    return -1;
+
+    while(i < n1){
+        res.push_back(nums1[i]);
+        i++;
+    }
+
+    while(j < n2){
+        res.push_back(nums2[j]);
+        j++;
+    }
+
+    return res;
 }
+
+double findMedianSortedArrays(vector<int> &nums1, vector<int> &nums2){
+    vector<int> res = merge(nums1, nums2);
+    int N = res.size();
+    if(N %2 == 0)
+        return (res[N/2 - 1] + res[N/2])/2.0;
+    else
+        return res[N/2];
+}
+
+// Binary Search Method
+// double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+//     int N1 = nums1.size(), N2 = nums2.size(), N = N1 + N2;
+//     if(N1 > N2) return findMedianSortedArrays(nums2, nums1);
+    
+//     if(N1 == 0){
+//         if(N2 % 2 == 0)
+//             return (nums2[N2/2 - 1] + nums2[N2/2])/2.0;
+//         else
+//             return nums2[N2/2];
+//     }
+    
+//     int cutL = 0, cutR = N1;
+//     int cut1 = cutL + (cutR - cutL)/2, cut2 = N/2 - cut1;
+    
+//     while(cut1 <= N1){
+//         cut1 = cutL + (cutR - cutL)/2;
+//         cut2 = N/2 - cut1;
+        
+//         double L1 = (cut1 == 0? INT_MIN : nums1[cut1 - 1]);
+//         double L2 = (cut2 == 0? INT_MIN : nums2[cut2 - 1]);
+//         double R1 = (cut1 == N1? INT_MAX : nums1[cut1]);
+//         double R2 = (cut2 == N2? INT_MAX : nums2[cut2]);
+        
+//         if(L1 > R2)
+//             // move to the left
+//             cutR = cut1 - 1;
+//         else if(L2 > R1)
+//             // move to the right
+//             cutL = cut1 + 1;
+//         else {
+//             // case with target found
+//             if(N % 2 == 0)
+//                 // N is even
+//                 return (max(L1, L2) + min(R1, R2))/2.0;
+//             else
+//                 return min(R1, R2);
+//         }
+//     }
+//     return -1;
+// }
 
 
 int main(){

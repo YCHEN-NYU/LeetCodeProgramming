@@ -12,17 +12,42 @@
 #include <vector>
 using namespace std;
 
-int maxArea(vector<int>& height) {
-    int water = 0;
-    int iLeft = 0, iRight = height.size() - 1;
-    while(iLeft < iRight){
-        int h = min(height[iLeft], height[iRight]);
-        water = max(water, h*(iRight - iLeft));
-        while(height[iLeft] <= h && iLeft < iRight) iLeft++;
-        while(height[iRight] <= h && iLeft < iRight) iRight--;
+// int maxArea(vector<int>& height) {
+//     int n = height.size();
+//     int iLeft = 0, iRight = n - 1;
+//     int water = 0;
+//     while(iLeft < iRight){
+//         int h = min(height[iLeft], height[iRight]);
+//         water = max(water, (iRight - iLeft)*h);
+//         while(iLeft < iRight && height[iLeft] <= h) iLeft++;
+//         while(iLeft < iRight && height[iRight] <= h) iRight--;
+//     }
+//     return water;
+// }
+
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        // brute force 
+        int n = height.size(), water = 0;
+        int iLeft = 0, iRight = n - 1;
+        
+        while(iLeft < iRight){
+            int h = min(height[iLeft], height[iRight]);
+            water = max(water, h*(iRight - iLeft));
+            while(iLeft < iRight && height[iLeft] <= h){
+                iLeft++;
+//                h = min(height[iLeft], h);
+            }
+            while(iLeft < iRight && height[iRight] <= h){
+                iRight--;
+//                h = min(h, height[iRight]);
+            }
+        }
+        return water;
+        
     }
-    return water;
-}
+};
 
 int main(){
     vector<int> height = {1,8,6,2,5,4,8,3,7};

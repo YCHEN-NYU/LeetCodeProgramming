@@ -17,8 +17,12 @@ int threeSumClosest(vector<int>& nums, int target) {
         
         while(iLeft < iRight){
             int sum = nums[i] + nums[iLeft] + nums[iRight];
-            if(sum > target)  iRight--;
-            else iLeft++;
+            
+            if(sum > target)
+                iRight--;
+            else
+                iLeft++;
+            
             if(abs(sum - target) < abs(res - target))
                 res = sum;
         }

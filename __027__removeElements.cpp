@@ -22,15 +22,18 @@
 using namespace std;
 
 vector<int> removeElement(vector<int>& nums, int val) {
-    int len = nums.size();
-    for(int i = 0; i < len; i++){
+    int n = nums.size();
+    int index = 0;
+    for(int i = 0; i < n; i++){
         if(nums[i] == val){
-            nums.erase(nums.begin() + i);
-            i--;
-            len--;
+            continue;
+        }
+        else{
+            nums[index] = nums[i];
+            index++;
         }
     }
-    return nums;
+    return index;
 }
 
 void printList(vector<int> & nums){

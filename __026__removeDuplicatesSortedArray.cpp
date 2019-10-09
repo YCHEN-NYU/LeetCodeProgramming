@@ -19,18 +19,17 @@
 #include <vector>
 using namespace std;
 
-vector<int> removeDuplicates(vector<int> & nums){
-    int len = nums.size();
-    if(len > 1){
-        for (int i = 1; i < len; i++) {
-            if(nums[i] == nums[i - 1]){
-                nums.erase(nums.begin() + i);
-                i--;
-                len--;
-            }
-        }
+int removeDuplicates(vector<int> & nums){
+    int n = nums.size();
+    if(n <= 1) return n;
+    int index = 0;
+    for(int i = 0; i < n; i++){
+        if(nums[index] == nums[i])
+            continue;
+        else
+            nums[++index] = nums[i];
     }
-    return nums;
+    return index + 1;
 }
 
 void printList(vector<int> & nums){

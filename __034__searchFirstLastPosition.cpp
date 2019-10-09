@@ -17,39 +17,38 @@ vector<int> searchRange(vector<int>& nums, int target) {
     
     vector<int> res(2, -1);
     if(nums.size() == 0) return res;
+    
     // search the left part
-    int iLeft = 0, iRight = nums.size() - 1;
-    while(iLeft < iRight){
-        int mid = (iLeft + iRight)/2;
-        if(target < nums[mid]){
-            iRight = mid - 1;
-        }
+    int low = 0, high = nums.size() - 1;
+    while(low < high){
+        int mid = low + (high - low)/2;
+        
+        if(target < nums[mid])
+            high = mid - 1; // search left part [low, mid - 1]
         else{
-            if(target > nums[mid]){
-                iLeft = mid + 1;
-            }
-            else{
-                iRight = mid;
-            }
+            if(target > nums[mid])
+                low = mid + 1; // search right part: [mid + 1, high]
+            else
+                high = mid; // search right part with the mid element: [mid, high]
         }
     }
-    if(target != nums[iLeft]) return res;
-    else res[0] = iLeft;
+    
+    if(target != nums[low])
+        return res; // nothing found
+    else
+        res[0] = low;
     
     // search the right part
-    iRight = nums.size() - 1;
-    while(iLeft < iRight){
-        int mid = (iLeft + iRight + 1)/2;
-        if(target < nums[mid]){
-            iRight = mid - 1;
-        }
+    high = nums.size() - 1;
+    while(low < high){
+        int mid = low + (high - low + 1)/2;
+        if(target < nums[mid])
+            high = mid - 1;
         else{
-            if(target > nums[mid]){
-                iLeft = mid + 1;
-            }
-            else{
-                iLeft = mid;
-            }
+            if(target > nums[mid])
+                low = mid + 1; // search right part [mid + 1, high]
+            else
+                low = mid; // search right part with mid element [mid, high]
         }
     }
     

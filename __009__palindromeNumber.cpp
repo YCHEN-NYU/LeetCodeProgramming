@@ -27,20 +27,21 @@ using namespace std;
 bool isPalindrome(int x) {
     if(x < 0) return false;
     else{
+        if(x == 0) return true;
+        
         vector<int> num;
         while(x != 0){
             num.push_back(x%10);
             x /= 10;
         }
-        
-        for(int i = 0; i < num.size(); i++){
-            if(num[i] != num[num.size() - 1 - i])
+        int n = nums.size();
+        for(int i = 0; i < n; i++){
+            if(num[i] != num[n - 1 - i])
                 return false;
         }
         return true;
     }
 }
-
 
 int main(){
     vector<int> numList = {121, -121, 989, 10};

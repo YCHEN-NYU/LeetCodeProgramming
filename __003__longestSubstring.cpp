@@ -26,19 +26,19 @@ using namespace std;
 
 int lengthOfLongestSubstring(string s){
     if(s.size() == 0) return 0;
-    int iLeft = 0, maxLen = 0;
+    int rightMostIndex = 0, maxLen = 0;
     unordered_map<char, int> charMap;
     
     for(int i = 0; i < s.size(); i++){
         // renew the rightmost non-repetitive position index
         if(charMap.find(s[i]) != charMap.end())
-            iLeft = max(iLeft, charMap[s[i]] + 1);
+            rightMostIndex = max(rightMostIndex, charMap[s[i]] + 1);
         
         // renew hash table
         charMap[s[i]] = i;
         
         // calculate the current length and compare with previous maxLen
-        maxLen = max(maxLen, i - iLeft + 1);
+        maxLen = max(maxLen, i - rightMostIndex + 1);
     }
     return maxLen;
 }

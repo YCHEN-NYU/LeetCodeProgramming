@@ -5,12 +5,11 @@
  Note that the returned canonical path must always begin with a slash /, and there must be only a single slash / between two directory names. The last directory name (if it exists) must not end with a trailing /. Also, the canonical path must be the shortest string representing the absolute path.
  
  Example 1:
- 
  Input: "/home/"
  Output: "/home"
  Explanation: Note that there is no trailing slash after the last directory name.
- Example 2:
  
+ Example 2:
  Input: "/../"
  Output: "/"
  Explanation: Going one level up from the root directory is a no-op, as the root level is the highest level you can go.
@@ -24,30 +23,32 @@
 
 using namespace std;
 
-string simplifyPath(string path){
-    string res = "", tmp;
+
+string simplifyPath(string path) {
+    string res, str;
     stringstream ss(path);
     stack<string> stk;
-    while (getline(ss, tmp, '/')) {
-        if(tmp == "" || tmp == ".") continue;
-        if(tmp == ".." && !stk.empty()) stk.pop();
+    
+    while(getline(ss, str, '/')){
+        if(str == "" || str == ".") continue;
         else{
-            if(tmp != "..") stk.push(tmp);
+            if(str == ".."){
+                if(!stk.empty()) stk.pop();
+            }
+            else stk.push(str);
         }
     }
     
-    while(!stk.empty()){
-        res = "/" + stk.top() + res;
-        stk.pop();
-    }
-    
-    if(res.size() == 0)
+    if(stk.empty())
         return "/";
-    else
+    else{
+        while(!stk.empty()){
+            res = "/" + stk.top() + res;
+            stk.pop();
+        }
         return res;
-    
+    }
 }
-
 
 int main(){
     vector<string> paths = {"/home/", "/../", "/home//foo/", "/a/./b/../../c/", "/a/../../b/../c//.//", "/a//b////c/d//././/.."};

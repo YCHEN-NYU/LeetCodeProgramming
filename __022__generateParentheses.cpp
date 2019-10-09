@@ -15,23 +15,26 @@
 #include <vector>
 using namespace std;
 
-void helper(vector<string> &v, string str, int n, int m){
-    if(n == 0 && m == 0){
-        v.push_back(str);
+// DFS
+void helper(vector<string> &res, string tmp, int leftBracket, int rightBracket){
+    if(leftBracket == 0 && rightBracket == 0){
+        res.push_back(tmp);
         return;
     }
-    if(m > 0) helper(v, str + ")", n, m - 1);
-    if(n > 0) helper(v, str + "(", n - 1, m + 1);
+    if(rightBracket > 0) helper(res, tmp + ")", leftBracket, rightBracket - 1);
+    if(leftBracket > 0) helper(res, tmp + "(", leftBracket - 1, rightBracket + 1);
 }
 
 vector<string> generateParenthesis(int n) {
     vector<string> res;
-    helper(res, "", n, 0);
+    string tmp = "";
+    helper(res, tmp, n, 0);
     return res;
 }
 
 int main(){
     vector<string> s = generateParenthesis(3);
+    
     for (int i = 0; i < s.size(); i++) {
         cout << s[i] << endl;
     }

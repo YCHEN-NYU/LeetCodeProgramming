@@ -11,7 +11,7 @@
  Output: -321
  
  Example 3:
-  Input: 120
+ Input: 120
  Output: 21
  
  Note:
@@ -23,13 +23,14 @@
 using namespace std;
 
 int reverseInteger(int num){
-    long long res = 0;
+    long long res = 0; // prevent overflow!
     
     while(num != 0){
         res = res*10 + num%10;
         num /= 10;
     }
-    if(res > INT_MAX || res < INT_MIN)  return 0;
+    if(res > INT_MAX || res < INT_MIN) // if the reversed integer overflows!
+        return 0;
     else
         return res;
 }

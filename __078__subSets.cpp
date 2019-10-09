@@ -1,26 +1,22 @@
 #include <iostream>
 #include <vector>
+#include "printMatrix2D.h"
 using namespace std;
 
-void helper(vector<int> &nums, vector<int> &tempList, int begin, vector<vector<int>> &res){
-    cout << "tempList.size() = " << tempList.size() << endl;
-    res.push_back(tempList);
+void helper(vector<int> &nums, int start, vector<int> &tmp, vector<vector<int>> &res){
+    res.push_back(tmp);
     
-    for (int i = begin; i < nums.size(); i++) {
-        tempList.push_back(nums[i]);
-        // recursive call of the helper function
-        helper(nums, tempList, i + 1, res);
-        // reset
-        tempList.erase(tempList.end() - 1);
+    for(int i = start; i < nums.size(); i++){
+        tmp.push_back(nums[i]);
+        helper(nums, i + 1, tmp, res);
+        tmp.pop_back();
     }
 }
 
-vector<vector<int>> subSet(vector<int> &nums){
-    cout << "nums.size() = " << nums.size() << endl;
-    sort(nums.begin(), nums.end());
+vector<vector<int>> subsets(vector<int>& nums) {
     vector<vector<int>> res;
-    vector<int> tempList;
-    helper(nums, tempList, 0, res);
+    vector<int> tmp;
+    helper(nums, 0, tmp, res);
     return res;
 }
 
@@ -38,24 +34,11 @@ vector<vector<int>> subsetIterative(vector<int> &nums){
     return res;
 }
 
-void printVector2D(vector<vector<int>> &vector2D){
-    int ROWS = vector2D.size();
-    cout << "size of subset = " << ROWS << endl;
-    cout << "Output = " << "[";
-    for (int row = 0; row < ROWS; row++) {
-        int COLUMNS = vector2D[row].size();
-        cout << "[";
-        for (int col = 0; col < COLUMNS; col++) {
-            cout << vector2D[row][col];
-            if(col != COLUMNS - 1) cout << ",";
-        }
-        if(row != ROWS - 1) cout << "], ";
-    }   cout << "]" << endl;
-}
+
 
 
 int main(){
     vector<int> nums = {1, 2, 3};
-    vector<vector<int>> res = subsetIterative(nums);
-    printVector2D(res);
+    vector<vector<int>> res = subsets(nums);
+    printMatrix2D(res);
 }

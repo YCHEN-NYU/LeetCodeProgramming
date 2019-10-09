@@ -26,6 +26,19 @@
  Explanation: We define the gray code sequence to begin with 0.
  A gray code sequence of n has size = 2n, which for n = 0 the size is 20 = 1.
  Therefore, for n = 0 the gray code sequence is [0].
+
+ Say the example input is 3.
+
+0 000
+1 001
+3 011
+2 010
+
+6 110
+7 111
+5 101
+4 100
+
  */
 
 #include <iostream>
@@ -37,7 +50,6 @@ using namespace std;
 vector<int> grayCode(int n) {
     vector<int> res;
     res.push_back(0);
-    
     for(int i = 0; i < n; i++){
         int len = res.size();
         for(int k = len - 1; k >= 0; k--){

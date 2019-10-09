@@ -20,7 +20,6 @@
 #include <vector>
 using namespace std;
 
-
 vector<vector<int>> threeSum(vector<int>& nums) {
     vector<vector<int>> res;
     if(nums.size() <= 2)  return res;

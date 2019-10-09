@@ -50,7 +50,7 @@ using namespace std;
 
 int myAtoi(string str) {
     int i = 0;
-    while(str[i] == ' ') i++;
+    while(str[i] == ' ') i++; // skip leading spaces
     // "42", "-42", "4193 with words", "words and 987", "-91283472332"
     int sign = 1;
     if(str[i] == '-' || str[i] == '+'){
@@ -61,7 +61,7 @@ int myAtoi(string str) {
     long long res = 0;
     while(i < str.size() && str[i] >= '0' && str[i] <= '9'){
         res = res*10 + (str[i] - '0');
-        if(sign*res > INT_MAX || sign*res < INT_MIN)
+        if(sign*res > INT_MAX || sign*res < INT_MIN) // overflow!
             break;
         i++;
     }

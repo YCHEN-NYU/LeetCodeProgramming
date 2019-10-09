@@ -55,19 +55,42 @@ int getLength(ListNode * head){
 }
 
 
-ListNode* removeNthFromEnd(ListNode* head, int n) {
-    int len = getLength(head);
-    if(n == len)    return head->next;
+// ListNode* removeNthFromEnd(ListNode* head, int n) {
+//     int len = getLength(head);
+//     if(n == len)    return head->next;
     
-    ListNode * cur = head;
-    int i = len - n - 1;
-    while(i > 0){
-        cur = cur->next;
-        i--;
+//     ListNode * cur = head;
+//     int i = len - n - 1;
+//     while(i > 0){
+//         cur = cur->next;
+//         i--;
+//     }
+//     if(cur->next)
+//         cur->next = cur->next->next;
+//     return head;
+// }
+
+ListNode* removeNthFromEnd(ListNode* head, int n) {
+    ListNode * dummy = new ListNode(0);
+    dummy->next = head;
+    ListNode *fast = dummy, *slow = dummy;
+    // move fast pointer n times from dummy
+    while(n > 0){
+        fast = fast->next;
+        n--;
     }
-    if(cur->next)
-        cur->next = cur->next->next;
-    return head;
+    // move slow & fast pointers till fast->next == NULL
+    while(fast && fast->next){
+        fast = fast->next;
+        slow = slow->next;
+    }
+    
+    // remove the node slow->next
+    ListNode *tmp = slow->next;
+    slow->next = slow->next->next;
+    delete tmp; // recycle memory space 
+    
+    return dummy->next;
 }
 
 int main(){

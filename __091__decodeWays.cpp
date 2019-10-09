@@ -17,6 +17,10 @@
  Input: "226"
  Output: 3
  Explanation: It could be decoded as "BZ" (2 26), "VF" (22 6), or "BBF" (2 2 6).
+ 
+ // 2 2 1 7
+ // dp[] = [1], [1], [1 ("2") + 1 ("22")], [2 ("1") +  1 ("21")], [3 ("7") + 2 ("27") ] --> return 5.
+
  */
 
 #include <iostream>
@@ -28,7 +32,7 @@ int numDecodings(string s){
     if(s.size() == 0)  return 0;
     
     int n = s.size();
-    vector<int> dp(n + 1);
+    vector<int> dp(n + 1, 0);
     dp[0] = 1;
     dp[1] = (s[0] != '0'? 1 : 0);
     

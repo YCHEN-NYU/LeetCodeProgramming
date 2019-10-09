@@ -43,29 +43,52 @@
  s = "mississippi"
  p = "mis*is*p*."
  Output: false
- */
-
+*/
 
 /*
- We define dp[i][j] to be true if s[0..i) matches p[0..j) and false otherwise. The state equations will be:
- 
- dp[i][j] = dp[i - 1][j - 1], if p[j - 1] != '*' && (s[i - 1] == p[j - 1] || p[j - 1] == '.');
- dp[i][j] = dp[i][j - 2], if p[j - 1] == '*' and the pattern repeats for 0 time;
- dp[i][j] = dp[i - 1][j] && (s[i - 1] == p[j - 2] || p[j - 2] == '.'), if p[j - 1] == '*' and the pattern repeats for at least 1 time.
+1, If p.charAt(j) == s.charAt(i) :  dp[i][j] = dp[i-1][j-1];
+2, If p.charAt(j) == '.' : dp[i][j] = dp[i-1][j-1];
+3, If p.charAt(j) == '*':
+here are two sub conditions:
+1   if p.charAt(j-1) != s.charAt(i) : dp[i][j] = dp[i][j-2]  //in this case, a* only counts as empty
+2   if p.charAt(i-1) == s.charAt(i) or p.charAt(i-1) == '.':
+dp[i][j] = dp[i-1][j]    //in this case, a* counts as multiple a
+or dp[i][j] = dp[i][j-1]   // in this case, a* counts as single a
+or dp[i][j] = dp[i][j-2]   // in this case, a* counts as empty
  */
 
 bool isMatch(string s, string p) {
     int m = s.size(), n = p.size();
+    // corner cases
+    if(m == 0 && n == 0) return true;
+    
     vector<vector<bool>> dp(m + 1, vector<bool>(n + 1, false));
-    dp[0][0] = true;
-    for (int i = 0; i <= m; i++) {
-        for (int j = 1; j <= n; j++) {
-            if (p[j - 1] == '*') {
-                dp[i][j] = dp[i][j - 2] || (i && dp[i - 1][j] && (s[i - 1] == p[j - 2] || p[j - 2] == '.'));
-            } else {
-                dp[i][j] = i && dp[i - 1][j - 1] && (s[i - 1] == p[j - 1] || p[j - 1] == '.');
+    dp[0][0] = true; // initialization
+    
+    // initialize the first row case
+    for(int j = 0; j < n; j++){
+        if(j > 0 && p[j] == '*' && dp[0][j - 1]){
+            dp[0][j + 1] = true;
+        }
+    }
+    
+    for(int i = 0; i < m; i++){
+        for(int j = 0; j < n; j++){
+            if(s[i] == p[j] || p[j] == '.'){
+                dp[i + 1][j + 1] = dp[i][j];
+            }
+            
+            if(p[j] == '*'){
+                if(p[j - 1] != s[i] && p[j - 1] != '.'){
+                    dp[i + 1][j + 1] = dp[i + 1][j - 1];
+                }
+                else{
+                    // *: 0, 1, 2, ...
+                    dp[i + 1][j + 1] = (dp[i + 1][j - 1] || dp[i + 1][j] || dp[i][j + 1]);
+                }
             }
         }
     }
     return dp[m][n];
+    
 }

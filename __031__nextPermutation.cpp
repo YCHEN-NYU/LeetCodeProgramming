@@ -15,34 +15,30 @@
 using namespace std;
 
 void nextPermutation(vector<int>& nums) {
-    // check from the end to i, find the first num that's smaller than all the numbers in the back, swap
-    int maxIndex;
-    bool flag = false;
-    for(int i = nums.size() - 2; i >= 0; i--){
-        int maxIndex = i;
-        
-        for(int j = i + 1; j < nums.size(); j++){
-            if(nums[i] < nums[j]){
-                if(j == i + 1)
-                    maxIndex = j;
-                else
-                    maxIndex = (nums[maxIndex] < nums[j]? maxIndex : j);
+    
+    int n = nums.size();
+    // scan from the back to find the first element nums[i - 1] < nums[i]
+    int i = n - 1;
+    for(; i > 0; i--){
+        if(nums[i - 1] < nums[i]) break;
+    }
+    
+    // find number from index = [i, n - 1] that's bigger than nums[i - 1]
+    if(i != 0){
+        for(int j = n - 1; j >= i; j--){
+            // swap the two number
+            if(nums[j] > nums[i - 1]){
+                swap(nums[j], nums[i - 1]);
+                break;
             }
         }
         
-        if(maxIndex != i){
-            int temp = nums[i];
-            nums[i] = nums[maxIndex];
-            nums[maxIndex] = temp;
-            sort(nums.begin() + i + 1, nums.end());
-            flag = true;
-            break;
-        }
+        // sort index = [i, n - 1] by increasing order
+        sort(nums.begin() + i, nums.end());
     }
-    if(!flag) sort(nums.begin(), nums.end());
+    else
+        sort(nums.begin(), nums.end());
 }
-
-
 
 void printList(vector<int> & nums){
     cout << "[";

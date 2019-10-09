@@ -21,34 +21,32 @@
 #include <vector>
 using namespace std;
 
-
-void helper(vector<int> &candidates, int target, int begin, vector<int> tempList, vector<vector<int>> &res){
+void helper(vector<int> & candidates, int target, int start, vector<int> &tmp, vector<vector<int>> &res){
     if(target == 0){
-        res.push_back(tempList);
+        res.push_back(tmp);
         return;
     }
     else{
         if(target > 0){
-            for (int i = begin; i < candidates.size(); i++) {
-                if(i > begin && candidates[i] == candidates[i - 1]) continue;
-                tempList.push_back(candidates[i]);
-                helper(candidates, target - candidates[i], i + 1, tempList, res);
-                tempList.erase(tempList.end() - 1);
+            for(int i = start; i < candidates.size(); i++){
+                // skip duplicates
+                if(i > start && candidates[i] == candidates[i - 1]) continue;
+                tmp.push_back(candidates[i]);
+                helper(candidates, target - candidates[i], i + 1, tmp, res);
+                tmp.pop_back();
+                
             }
         }
-        else
-            return;
     }
 }
 
-vector<vector<int>> combinationSumII(vector<int> &candidates, int target){
+vector<vector<int>> combinationSumII(vector<int>& candidates, int target) {
     sort(candidates.begin(), candidates.end());
     vector<vector<int>> res;
-    vector<int> tempList;
-    helper(candidates, target, 0, tempList, res);
+    vector<int> tmp;
+    helper(candidates, target, 0, tmp, res);
     return res;
 }
-
 
 void printVector2D(vector<vector<int>> &vector2D){
     int ROWS = vector2D.size();
@@ -63,9 +61,12 @@ void printVector2D(vector<vector<int>> &vector2D){
 }
 
 int main(){
-    vector<int> candidates = {2,5,2,1,2};
-    int target = 5;
-    vector<vector<int>> res = combinationSumII(candidates, target);
-    printVector2D(res);
+    vector<vector<int>> candidatesList = {{10,1,2,7,6,1,5}, {2,5,2,1,2}};
+    vector<int> targetList = {8, 5};
+    for(int i = 0; i < candidatesList.size(); i++){
+        vector<vector<int>> res = combinationSumII(candidatesList[i], targetList[i]);
+        printVector2D(res);
+    }
+    
     
 }

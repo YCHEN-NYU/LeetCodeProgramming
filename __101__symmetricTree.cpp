@@ -30,7 +30,5 @@ bool helper(TreeNode * leftNode, TreeNode * rightNode){
     if(!leftNode && rightNode)  return false;
     if(leftNode && !rightNode)  return false;
     if(leftNode->val != rightNode->val) return false;
-    return  helper(leftNode->left, rightNode->right) &&
-    helper(leftNode->right, rightNode->left);
-    
+    return  helper(leftNode->left, rightNode->right) && helper(leftNode->right, rightNode->left);
 }

@@ -13,11 +13,22 @@
 using namespace std;
 
 int trap(vector<int>& height) {
-    int l = 0, r = height.size()-1, level = 0, water = 0;
-    while (l < r) {
-        int lower = height[height[l] < height[r] ? l++ : r--];
-        level = max(level, lower);
-        water += level - lower;
+    if(height.size() == 0)  return 0;
+    int n = height.size();
+    vector<int> leftHeight(n, 0), rightHeight(n, 0);
+    leftHeight[0] = height[0];
+    rightHeight[n - 1] = height[n - 1];
+    
+    for(int i = 1; i < n; i++){
+        leftHeight[i] = max(leftHeight[i - 1], height[i]);
+    }
+    for(int j = n - 2; j >= 0; j--){
+        rightHeight[j] = max(rightHeight[j + 1], height[j]);
+    }
+    
+    int water = 0;
+    for(int k = 0; k < n; k++){
+        water += max(min(leftHeight[k], rightHeight[k]) - height[k], 0);
     }
     return water;
 }

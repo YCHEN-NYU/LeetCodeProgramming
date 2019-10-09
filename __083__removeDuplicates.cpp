@@ -21,18 +21,31 @@ struct ListNode{
     ListNode(int x): val(x), next(NULL) {}
 };
 
-ListNode * removeDuplicates(ListNode *head){
-    ListNode * p = head;
-    while(p){
-        if(p->next && p->val == (p->next)->val){
-            ListNode *tmp = p->next;
-            p->next = (p->next)->next;
-            delete tmp;
-        }
-        else{
-            p = p->next;
-        }
-        
+//ListNode * removeDuplicates(ListNode *head){
+//    ListNode * p = head;
+//    while(p){
+//        if(p->next && p->val == (p->next)->val){
+//            ListNode *tmp = p->next;
+//            p->next = (p->next)->next;
+//            delete tmp;
+//        }
+//        else{
+//            p = p->next;
+//        }
+//
+//    }
+//    return head;
+//}
+
+ListNode* deleteDuplicates(ListNode* head) {
+    if(!head || !head->next)    return head;
+    
+    ListNode * cur = head;
+    while(cur){
+        if(cur->next && cur->val == cur->next->val)
+            cur->next = cur->next->next;
+        else
+            cur = cur->next;
     }
     return head;
 }

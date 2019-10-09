@@ -18,59 +18,18 @@
  X can be placed before L (50) and C (100) to make 40 and 90.
  C can be placed before D (500) and M (1000) to make 400 and 900.
  Given an integer, convert it to a roman numeral. Input is guaranteed to be within the range from 1 to 3999.
- 
- Example 1:
- Input: 3
- Output: "III"
- 
- Example 2:
- Input: 4
- Output: "IV"
- 
- Example 3:
- Input: 9
- Output: "IX"
- 
- Example 4:
- Input: 58
- Output: "LVIII"
- Explanation: L = 50, V = 5, III = 3.
- 
- Example 5:
- Input: 1994
- Output: "MCMXCIV"
- Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.
- 
- 
- Symbol       Value
- I             1
- V             5
- X             10
- L             50
- C             100
- D             500
- M             1000
- 
  */
-
 #include <iostream>
 #include <unordered_map>
-#include <vector>
 using namespace std;
 
 string intToRoman(int num){
-    string I[] = {"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"};
-    string X[] = {"", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"};
-    string C[] = {"", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"};
-    string M[] = {"", "M", "MM", "MMM"};
-    
+    vector<string> I = {"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"};
+    vector<string> X = {"", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"};
+    vector<string> C = {"", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"};
+    vector<string> M = {"", "M", "MM", "MMM"};
     return M[num/1000] + C[(num%1000)/100] + X[(num%100)/10] + I[num%10];
 }
-int main(){
-    vector<int> numList = {0, 3, 4, 9, 58, 1994};
-    for (int i = 0; i < numList.size(); i++) {
-        cout << numList[i] << ": " << intToRoman(numList[i]) << endl;
-    }
-}
+
 
 
